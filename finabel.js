@@ -32,7 +32,7 @@ var finabel = (function () {
     if (verbose) console.log(label, ":", value.toString(16), "\n");
   }
 
-  var hex = "0123456789ABCDEF";
+  var hex = "0123456789abcdef";
   var lookup = new Array(256);
   for (var index = 0; index < 256; ++index)
     lookup[index] = hex.charAt(index >> 4) + hex.charAt(index & 0xf);
@@ -68,8 +68,8 @@ var finabel = (function () {
   var B = primes[1];
   var C = primes[2];
 
-  var record_separator = text_to_hex("\u001e");
-  var field_separator = text_to_hex("\u001c");
+  var record_separator = "\u001e";
+  var field_separator = "\u001c";
 
   /*
  Key stretching function
@@ -104,7 +104,7 @@ var finabel = (function () {
       result += next + field_separator;
     }
 
-    if (verbose) console.log("Merged: ", result);
+    if (verbose) console.log("Merged: ", result, "\n");
 
     /*
  Compute the hash
