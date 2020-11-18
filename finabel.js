@@ -80,7 +80,7 @@ var finabel = (function () {
     do {
       result += record_separator + text;
     } while (result.length < minimum_digits);
-    return BigInt(text_to_hex(result), 16);
+    return BigInt("0x" + text_to_hex(result));
   }
 
   /*
@@ -103,6 +103,8 @@ var finabel = (function () {
       if (next == null || next == "") continue;
       result += next + field_separator;
     }
+
+    if (verbose) console.log("Merged: ", result);
 
     /*
  Compute the hash
