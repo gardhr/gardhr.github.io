@@ -1585,7 +1585,12 @@ var finabel = (function () {
       result = F.toString(16);
     } while (rounds-- > 0);
 
-    if (digits > 0) return result.substr(0, digits);
+    if (digits > 0) {
+      var length = result.length;
+      if (length >= digits) return result.substr(0, digits);
+      while (length++ < digits) result += "0";
+    }
+
     return result;
   }
 
