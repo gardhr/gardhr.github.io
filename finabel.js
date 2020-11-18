@@ -1489,13 +1489,9 @@ var finabel = (function () {
  Finabel Hash implementation
 */
 
-  var debugging = true;
-
-  var dump = debugging
-    ? function (label, value) {
-        console.log(label, ":", value.toString(16), "\n");
-      }
-    : function () {};
+  function dump(label, value, verbose) {
+    if (verbose) console.log(label, ":", value.toString(16), "\n");
+  }
 
   var hex = "0123456789ABCDEF";
   var lookup = new Array(256);
@@ -1554,7 +1550,7 @@ var finabel = (function () {
  Hash function interface
 */
 
-  function hash(key, salt, rounds, digits) {
+  function hash(key, salt, rounds, digits, verbose) {
     if (rounds == null) rounds = 0;
     if (digits == null) digits = 0;
     var list = Array.isArray(key) ? key : [key];
@@ -1577,17 +1573,17 @@ var finabel = (function () {
 
     do {
       var Q = stretch(result);
-      dump("Q", Q);
+      dump("Q", Q, verbose);
       var R = stretch(Q.times(A).mod(B));
-      dump("R", R);
+      dump("R", R, verbose);
       var F = Q.times(R).mod(C);
-      dump("F", F);
+      dump("F", F, verbose);
       result = F.toString(16);
     } while (rounds-- > 0);
 
     if (digits > 0) {
       var length = result.length;
-      if (length >= digits) return result.substr(0, digits);
+      if (length > digits) return result.substr(0, digits);
       while (length++ < digits) result += "0";
     }
 
