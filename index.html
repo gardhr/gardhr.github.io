@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Finabel Hash</title>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="finabel.js"></script>
+    <script>
+      function display() {
+        var key = document.getElementById("key").value;
+        var salt = document.getElementById("salt").value;
+        var rounds_input = document.getElementById("rounds");
+        var rounds = Number(rounds_input.value);
+        if (isNaN(rounds) || rounds < 0) {
+          rounds = 0;
+          rounds_input.value = "(default: 0)";
+        }
+        var digits_input = document.getElementById("digits");
+        var digits = Number(digits_input.value);
+        if (isNaN(digits) || digits < 0) {
+          digits = 0;
+          digits_input.value = "(default: show all)";
+        }
+        document.getElementById("output").innerHTML = finabel(
+          key,
+          salt,
+          rounds,
+          digits
+        );
+      }
+
+      function toggle() {
+        var input = document.getElementById("key");
+        var button = document.getElementById("visibility");
+        if (button.value == "hide") {
+          input.type = "password";
+          button.value = "show";
+        } else {
+          input.type = "text";
+          button.value = "hide";
+        }
+      }
+    </script>
+  </head>
+  <body
+    style="
+      background-color: #9befa4;
+      color: #369;
+      font-family: Arial, Helvetica, sans-serif;
+    "
+    onload="display()"
+  >
+    <br />
+    <h2 align="center">
+      Finabel: A Hashing Algorithm Based on Finite Abelian Groups [Proof of
+      Concept]
+    </h2>
+    <br />
+    <form onsubmit="display()" action="javascript:void(0)">
+      <table
+        align="center"
+        style="border-spacing: 15px; border-collapse: separate;"
+      >
+        <tr>
+          <td>
+            Key/Password &nbsp;
+            <input
+              type="button"
+              id="visibility"
+              value="hide"
+              onclick="toggle()"
+            />
+          </td>
+          <td>
+            Salt/Username (Optional)
+          </td>
+          <td>
+            Additional Iterations
+          </td>
+          <td>
+            Output Length (# of Hex Digits)
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <input type="text" id="key" onfocus="this.select()" />
+          </td>
+          <td>
+            <input type="text" id="salt" onfocus="this.select()" />
+          </td>
+          <td>
+            <input type="text" id="rounds" onfocus="this.select()" />
+          </td>
+          <td>
+            <input
+              type="text"
+              id="digits"
+              onfocus="this.select()"
+              value="(default)"
+            />
+          </td>
+          <td align="center">
+            <input type="submit" id="generate" value="Generate!" />
+          </td>
+        </tr>
+      </table>
+    </form>
+    <p id="output" style="word-wrap: break-word;"></p>
+  </body>
+</html>
