@@ -13,13 +13,13 @@
         var rounds = Number(rounds_input.value);
         if (isNaN(rounds) || rounds < 0) {
           rounds = 0;
-          rounds_input.value = "(default: 0)";
+          rounds_input.value = "";
         }
         var digits_input = document.getElementById("digits");
         var digits = Number(digits_input.value);
         if (isNaN(digits) || digits < 0) {
           digits = 0;
-          digits_input.value = "(default: show all)";
+          digits_input.value = "";
         }
         document.getElementById("output").innerHTML = finabel(
           key,
@@ -92,12 +92,7 @@
             <input type="text" id="rounds" onfocus="this.select()" />
           </td>
           <td>
-            <input
-              type="text"
-              id="digits"
-              onfocus="this.select()"
-              value="(default)"
-            />
+            <input type="text" id="digits" onfocus="this.select()" />
           </td>
           <td align="center">
             <input type="submit" id="generate" value="Generate!" />
