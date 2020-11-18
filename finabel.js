@@ -35,7 +35,7 @@ var finabel = (function () {
   var hex = "0123456789abcdef";
   var lookup = new Array(256);
   for (var index = 0; index < 256; ++index)
-    lookup[index] = hex.charAt(index >> 4) + hex.charAt(index & 0xf);
+    lookup[index] = hex.charAt(index >> 4) + hex.charAt(index & 0xf)
 
   function text_to_hex(data) {
     var result = "";
@@ -98,8 +98,8 @@ var finabel = (function () {
 */
 
     var result = record_separator;
-    for (var ldx = 0, lmx = list.length; ldx < lmx; ++ldx) {
-      var next = list[ldx];
+    for (var index = 0, length = list.length; index < length; ++index) {
+      var next = list[index];
       if (next == null || next == "") continue;
       result += next + field_separator;
     }
