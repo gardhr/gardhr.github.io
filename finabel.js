@@ -58,7 +58,7 @@ var finabel = (function () {
  Hash function interface
 */
 
-  function hash(key, salt, rounds, digits, verbose) {
+  function hash(key, salt, rounds, digits) {
     if (rounds == null) rounds = 0;
     if (digits == null) digits = 0;
     var keys = Array.isArray(key) ? key : [key];
