@@ -1,8 +1,8 @@
 var finabel = (function () {
-  var hex = "0123456789abcdef";
+  var hexadecimal = "0123456789abcdef";
   var lookup = new Array(256);
   for (var index = 0; index < 256; ++index)
-    lookup[index] = hex.charAt(index >> 4) + hex.charAt(index & 0xf);
+    lookup[index] = hexadecimal.charAt(index >> 4) + hexadecimal.charAt(index & 0xf);
 
   function toHex(text) {
     var result = "";
@@ -55,10 +55,10 @@ var finabel = (function () {
 */
 
   function stretch(value) {
-    var hex = value.toString(16);
-    var buffer = hex;
+    var hexadecimal = value.toString(16);
+    var buffer = hexadecimal;
     do {
-      buffer += record_separator + hex;
+      buffer += record_separator + hexadecimal;
     } while (buffer.length < minimum_digits);
     return BigInt("0x" + buffer);
   }
