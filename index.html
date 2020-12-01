@@ -11,15 +11,15 @@
         var salt = document.getElementById("salt").value;
         var rounds_input = document.getElementById("rounds");
         var rounds = Number(rounds_input.value);
-        if (isNaN(rounds) || rounds < 0) {
+        if (isNaN(rounds) || rounds <= 0) {
           rounds = 4096;
           rounds_input.value = "(default: 4096)";
         }
         var digits_input = document.getElementById("digits");
         var digits = Number(digits_input.value);
-        if (isNaN(digits) || digits < 0) {
+        if (isNaN(digits) || digits <= 0) {
           digits = 0;
-          digits_input.value = "(default: none)";
+          digits_input.value = "(default: all)";
         }
         document.getElementById("output").innerHTML = finabel(
           key,
