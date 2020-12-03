@@ -132,6 +132,7 @@ var finabel = (function () {
  Spin through "discard" rounds   
 */
     while (discards-- > 0) V = cycle(V);
+    
     /*
  Finish off with enough rounds needed satisfy our memory quota   
 */
