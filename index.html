@@ -10,22 +10,33 @@
         var key = document.getElementById("key").value;
         var salt = document.getElementById("salt").value;
         var rounds_input = document.getElementById("rounds");
+        var cost_input = document.getElementById("cost");
         var rounds = Number(rounds_input.value);
         if (isNaN(rounds) || rounds <= 0) {
-          rounds = 4096;
-          rounds_input.value = "(default: 4096)";
+          rounds = 1024;
+          rounds_input.value = "(default: 1024)";
         }
+
         var digits_input = document.getElementById("digits");
         var digits = Number(digits_input.value);
         if (isNaN(digits) || digits <= 0) {
           digits = 0;
           digits_input.value = "(default: all)";
         }
+
+        var cost_input = document.getElementById("cost");
+        var cost = Number(cost_input.value);
+        if (isNaN(cost) || cost <= 0) {
+          cost = 512;
+          cost_input.value = "(default: 512)";
+        }
+
         document.getElementById("output").innerHTML = finabel(
           key,
           salt,
           rounds,
-          digits
+          digits,
+          cost
         );
       }
 
@@ -99,9 +110,7 @@
         }
       }</style
     ><span id="forkongithub"
-      ><a href="https://github.com/gardhr/finabel"
-        >Fork me on GitHub</a
-      ></span
+      ><a href="https://github.com/gardhr/finabel">Fork me on GitHub</a></span
     >
     <br />
     <h2 align="center">
@@ -109,10 +118,7 @@
     </h2>
     <br />
     <form onsubmit="display()" action="javascript:void(0)">
-      <table
-        align="center"
-        style="border-spacing: 15px; border-collapse: separate;"
-      >
+      <table align="center" style="border-collapse: separate;">
         <tr>
           <td>
             Key/Password &nbsp;
@@ -132,6 +138,9 @@
           <td>
             Output Length (# of Hex Digits)
           </td>
+          <td>
+            Cost (# of Kilobytes)
+          </td>
         </tr>
         <tr>
           <td>
@@ -146,12 +155,15 @@
           <td>
             <input type="text" id="digits" onfocus="this.select()" />
           </td>
-          <td align="center">
+          <td>
+            <input type="text" id="cost" onfocus="this.select()" />
+          </td>
+          <td>
             <input type="submit" id="generate" value="Generate!" />
           </td>
         </tr>
       </table>
     </form>
-    <p id="output" style="color: #50366d;word-wrap: break-word;"></p>
+    <p id="output" style="color: #50366d; word-wrap: break-word;"></p>
   </body>
 </html>
