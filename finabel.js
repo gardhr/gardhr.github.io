@@ -1,4 +1,5 @@
 var finabel = (function () {
+
   /*
  Static lookup tables
 */
@@ -136,6 +137,7 @@ var finabel = (function () {
     /*
  Finish off with enough rounds needed satisfy our memory quota   
 */
+
     var buffer = "";
     while (true) {
       V = cycle(V);
