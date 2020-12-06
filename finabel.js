@@ -132,6 +132,7 @@ var finabel = (function () {
     /*
  Spin through "discard" rounds   
 */
+
     while (discards-- > 0) V = cycle(V);
     
     /*
@@ -156,9 +157,9 @@ var finabel = (function () {
       var accumulator = 0;
 
       while (accumulator < window) {
+        if (read-- == 0) break;
         accumulator <<= 4;
         accumulator |= lookupCode[buffer.codePointAt(read)];
-        if (read-- == 0) break;
       }
 
       var offset = Math.floor(accumulator % window) + 1;
