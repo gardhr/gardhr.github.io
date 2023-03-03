@@ -5,12 +5,12 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <style>
-      #progress {
-        color: black;
+      #critique-toggle {
+        color: #000bd6;
         width: 75%;
         background-color: #d60000;
       }
-      #bar {
+      #critique-gauge {
         width: 0%;
         height: 30px;
         background-color: #0bd600;
@@ -416,8 +416,13 @@ Sanity check (trailing bits must match those of the OTP)
         });
     </script>
     <script>
-      entropis.storage = localStorage.getItem("entropis");
       var visible = false;
+
+      function curry(data, action) {
+        return function () {
+          return action(data);
+        };
+      }
 
       function strict_password_entropy(password) {
         var length = password.length;
@@ -433,19 +438,19 @@ Sanity check (trailing bits must match those of the OTP)
       var criteria = 175;
 
       function critique() {
-        var progress = element("progress");
+        var progress = element("critique-toggle");
         var newpass = value("newpass");
         if (newpass == "") return show_element(progress, false);
         show_element(progress);
         var entropy = strict_password_entropy(newpass);
         var ratio = entropy / criteria;
         if (ratio >= 1) ratio = 1;
-        element("bar").style.width = Math.floor(ratio * 100) + "%";
+        element("critique-gauge").style.width = Math.floor(ratio * 100) + "%";
         var ratings = ["weak", "poor", "fair", "good", "excellent"];
         var index = Math.floor(ratio * ratings.length);
         if (index == ratings.length) --index;
         var score = ratings[index];
-        reset_html("bar", "&nbsp" + score);
+        reset_html("critique-gauge", "&nbsp" + score);
       }
 
       function element(id) {
@@ -481,22 +486,20 @@ Sanity check (trailing bits must match those of the OTP)
           yes !== false ? "block" : "none";
       }
 
-      function curry(data, action) {
-        return function () {
-          return action(data);
-        };
+      function hide_element(that) {
+        show_element(that, false);
       }
 
       function refresh(passwords) {
         status(null);
-        show_element("import-toggle", false);
-        show_element("export-toggle", false);
-        show_element("change-toggle", false);
-        show_element("progress", false);
         reset_html("errors");
+        reset_html("listing");
         reset_input("domain");
         reset_input("password");
-        reset_html("listing");
+        hide_element("import-toggle");
+        hide_element("export-toggle");
+        hide_element("change-toggle");
+        hide_element("critique-toggle");
         try {
           localStorage.setItem("entropis", entropis.storage);
         } catch (exception) {
@@ -730,6 +733,12 @@ Sanity check (trailing bits must match those of the OTP)
         reset_input("newpass");
         refresh();
       }
+
+      function initialize() {
+        entropis.storage = localStorage.getItem("entropis");
+        element("newpass").addEventListener("keyup", critique);
+        refresh();
+      }
     </script>
   </head>
   <body
@@ -740,7 +749,7 @@ Sanity check (trailing bits must match those of the OTP)
       font-size: 20px;
       font-weight: bold;
     "
-    onload="element('newpass').addEventListener('keyup', critique), refresh()"
+    onload="initialize()"
   >
     <div align="left">
       <a href="https://github.com/gardhr/entropis">GitHub</a>
@@ -842,8 +851,8 @@ Sanity check (trailing bits must match those of the OTP)
                 value="cancel"
                 onclick="show_element('change-toggle', false)"
               />
-              <div id="progress">
-                <div id="bar"></div>
+              <div id="critique-toggle">
+                <div id="critique-gauge"></div>
               </div>
             </div>
           </td>
